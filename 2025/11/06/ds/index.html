@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lucius7.dev","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="[TOC]  空间换时间  树状数组修改：单点加。查询：区间和。询问  中的逆序对的个数。修改：区间加减；查询：单点的值。线段树修改：区间加。查询：区间和。修改：区间乘、区间加。查询：区间和。查询：区间中有多少个不同的数。修改：区间加。查询：区间平均值、区间方差。修改：单点赋值。查询：区间最大字段和。修改：区间开平方。查询：区间和。修改：区间或。查询：最大字段和。修改：区间取模，单点赋值。查询：区">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构">
+<meta property="og:url" content="https://lucius7.dev/2025/11/06/ds/index.html">
+<meta property="og:site_name" content="Lucius7nya">
+<meta property="og:description" content="[TOC]  空间换时间  树状数组修改：单点加。查询：区间和。询问  中的逆序对的个数。修改：区间加减；查询：单点的值。线段树修改：区间加。查询：区间和。修改：区间乘、区间加。查询：区间和。查询：区间中有多少个不同的数。修改：区间加。查询：区间平均值、区间方差。修改：单点赋值。查询：区间最大字段和。修改：区间开平方。查询：区间和。修改：区间或。查询：最大字段和。修改：区间取模，单点赋值。查询：区">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-06T01:54:04.000Z">
+<meta property="article:modified_time" content="2025-11-06T12:20:49.000Z">
+<meta property="article:author" content="Lucius7">
+<meta property="article:tag" content="C++&#x2F;Competitive Programming">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lucius7.dev/2025/11/06/ds/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据结构 | Lucius7nya</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!--   
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+   -->
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lucius7nya</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">代码与猫耳并存的世界～ UwU</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lucius7.dev/2025/11/06/ds/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lucius7">
+      <meta itemprop="description" content="Lucius7 的喵喵杂谈 (ฅ´ωฅ)`">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lucius7nya">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-11-06 09:54:04 / 修改时间：20:20:49" itemprop="dateCreated datePublished" datetime="2025-11-06T09:54:04+08:00">2025-11-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<blockquote>
+<p>空间换时间</p>
+</blockquote>
+<h4 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h4><h5 id="修改：单点加。查询：区间和。"><a href="#修改：单点加。查询：区间和。" class="headerlink" title="修改：单点加。查询：区间和。"></a>修改：单点加。查询：区间和。</h5><h5 id="询问-a-n-中的逆序对的个数。"><a href="#询问-a-n-中的逆序对的个数。" class="headerlink" title="询问 $a_n$ 中的逆序对的个数。"></a>询问 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.344ex" height="1.355ex" role="img" focusable="false" viewBox="0 -441 1036.3 598.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(562,-150) scale(0.707)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg></mjx-container> 中的逆序对的个数。</h5><h5 id="修改：区间加减；查询：单点的值。"><a href="#修改：区间加减；查询：单点的值。" class="headerlink" title="修改：区间加减；查询：单点的值。"></a>修改：区间加减；查询：单点的值。</h5><h4 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h4><h5 id="修改：区间加。查询：区间和。"><a href="#修改：区间加。查询：区间和。" class="headerlink" title="修改：区间加。查询：区间和。"></a>修改：区间加。查询：区间和。</h5><h5 id="修改：区间乘、区间加。查询：区间和。"><a href="#修改：区间乘、区间加。查询：区间和。" class="headerlink" title="修改：区间乘、区间加。查询：区间和。"></a>修改：区间乘、区间加。查询：区间和。</h5><h5 id="查询：区间中有多少个不同的数。"><a href="#查询：区间中有多少个不同的数。" class="headerlink" title="查询：区间中有多少个不同的数。"></a>查询：区间中有多少个不同的数。</h5><h5 id="修改：区间加。查询：区间平均值、区间方差。"><a href="#修改：区间加。查询：区间平均值、区间方差。" class="headerlink" title="修改：区间加。查询：区间平均值、区间方差。"></a>修改：区间加。查询：区间平均值、区间方差。</h5><h5 id="修改：单点赋值。查询：区间最大字段和。"><a href="#修改：单点赋值。查询：区间最大字段和。" class="headerlink" title="修改：单点赋值。查询：区间最大字段和。"></a>修改：单点赋值。查询：区间最大字段和。</h5><h5 id="修改：区间开平方。查询：区间和。"><a href="#修改：区间开平方。查询：区间和。" class="headerlink" title="修改：区间开平方。查询：区间和。"></a>修改：区间开平方。查询：区间和。</h5><h5 id="修改：区间或。查询：最大字段和。"><a href="#修改：区间或。查询：最大字段和。" class="headerlink" title="修改：区间或。查询：最大字段和。"></a>修改：区间或。查询：最大字段和。</h5><h5 id="修改：区间取模，单点赋值。查询：区间和。"><a href="#修改：区间取模，单点赋值。查询：区间和。" class="headerlink" title="修改：区间取模，单点赋值。查询：区间和。"></a>修改：区间取模，单点赋值。查询：区间和。</h5>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/theLucius7">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/theLucius7">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/25/algorithm/" rel="prev" title="templates">
+      <i class="fa fa-chevron-left"></i> templates
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/11/06/%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%90%86%20(Cycle%20Lemma)/" rel="next" title="循环引理 (Cycle Lemma) —— 原理与竞赛应用">
+      循环引理 (Cycle Lemma) —— 原理与竞赛应用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">树状数组</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8D%95%E7%82%B9%E5%8A%A0%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%92%8C%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">修改：单点加。查询：区间和。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%A2%E9%97%AE-a-n-%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9%E7%9A%84%E4%B8%AA%E6%95%B0%E3%80%82"><span class="nav-number">1.2.</span> <span class="nav-text">询问  中的逆序对的个数。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%8A%A0%E5%87%8F%EF%BC%9B%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8D%95%E7%82%B9%E7%9A%84%E5%80%BC%E3%80%82"><span class="nav-number">1.3.</span> <span class="nav-text">修改：区间加减；查询：单点的值。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E6%AE%B5%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">线段树</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%8A%A0%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%92%8C%E3%80%82"><span class="nav-number">2.1.</span> <span class="nav-text">修改：区间加。查询：区间和。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8C%BA%E9%97%B4%E4%B9%98%E3%80%81%E5%8C%BA%E9%97%B4%E5%8A%A0%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%92%8C%E3%80%82"><span class="nav-number">2.2.</span> <span class="nav-text">修改：区间乘、区间加。查询：区间和。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E4%B8%AD%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA%E4%B8%8D%E5%90%8C%E7%9A%84%E6%95%B0%E3%80%82"><span class="nav-number">2.3.</span> <span class="nav-text">查询：区间中有多少个不同的数。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%8A%A0%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%B9%B3%E5%9D%87%E5%80%BC%E3%80%81%E5%8C%BA%E9%97%B4%E6%96%B9%E5%B7%AE%E3%80%82"><span class="nav-number">2.4.</span> <span class="nav-text">修改：区间加。查询：区间平均值、区间方差。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8D%95%E7%82%B9%E8%B5%8B%E5%80%BC%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E6%9C%80%E5%A4%A7%E5%AD%97%E6%AE%B5%E5%92%8C%E3%80%82"><span class="nav-number">2.5.</span> <span class="nav-text">修改：单点赋值。查询：区间最大字段和。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%BC%80%E5%B9%B3%E6%96%B9%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%92%8C%E3%80%82"><span class="nav-number">2.6.</span> <span class="nav-text">修改：区间开平方。查询：区间和。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8C%BA%E9%97%B4%E6%88%96%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E6%9C%80%E5%A4%A7%E5%AD%97%E6%AE%B5%E5%92%8C%E3%80%82"><span class="nav-number">2.7.</span> <span class="nav-text">修改：区间或。查询：最大字段和。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%8F%96%E6%A8%A1%EF%BC%8C%E5%8D%95%E7%82%B9%E8%B5%8B%E5%80%BC%E3%80%82%E6%9F%A5%E8%AF%A2%EF%BC%9A%E5%8C%BA%E9%97%B4%E5%92%8C%E3%80%82"><span class="nav-number">2.8.</span> <span class="nav-text">修改：区间取模，单点赋值。查询：区间和。</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lucius7"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Lucius7</p>
+  <div class="site-description" itemprop="description">Lucius7 的喵喵杂谈 (ฅ´ωฅ)`</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/theLucius7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;theLucius7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cixi.luo@qq.com" title="E-Mail → mailto:cixi.luo@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/theLucius7" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;theLucius7" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lucius7</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
