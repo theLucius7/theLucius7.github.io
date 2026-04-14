@@ -92,7 +92,7 @@ title = "hi, I'm Lucius7🥺"
     text = "Lucius7's Blog"
 
   [params.assets]
-    favicon = "/favicon.ico"
+    favicon = "https://avatars.githubusercontent.com/u/59860644?v=4"
 
 
 [[menu.main]]
