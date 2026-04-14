@@ -17,9 +17,9 @@ date: 2026-04-14
 
 ---
 
-## 竞赛账号
+## OJ 账号
 
-可以在这些平台找到我：
+可以在这些 OJ 找到我：
 
 - [Codeforces](https://codeforces.com/profile/Lucius7)
 - [AtCoder](https://atcoder.jp/users/Lucius7)
@@ -37,7 +37,7 @@ date: 2026-04-14
 
 主要会写：
 
-- **记录** — 算法学习笔记，题解
+- **记录** — 题解，算法学习笔记
 - **题解** — CF / CCPC / ICPC 赛题
 - **折腾** — 建站、工具配置、踩坑记录
 - **随笔** — 碎碎念，说不定还有游戏相关的
