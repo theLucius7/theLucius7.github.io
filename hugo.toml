@@ -1,10 +1,111 @@
 baseURL = "https://blog.lucius7.dev"
 languageCode = "zh-cn"
-title = "Hi, I'm Lucius7🥺"
+title = "hi, I'm Lucius7🥺"
+
+[taxonomies]
+  tag      = "tags"
+  category = "categories"
+  series   = "series"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 [markup]
-  [markup.goldmark.renderer]
-    unsafe = true
+  [markup.goldmark.extensions.passthrough]
+  enable = true
+  [markup.goldmark.extensions.passthrough.delimiters]
+    block  = [['\[', '\]'], ['$$', '$$']]   # ✅ 单引号 + 单反斜杠
+    inline = [['\(', '\)']]                 # ✅ 单引号 + 单反斜杠
+  [markup.highlight]
+    style              = "monokai"
+    lineNos            = true
+    lineNumbersInTable = true
+    guessSyntax        = true
+
+[params]
+  env         = "production"
+  author      = "Lucius7"
+  description = "OIer / XCPCer / DevOps"
+  math        = true
+  defaultTheme    = "auto"
+  ShowReadingTime       = true
+  ShowWordCount         = true
+  ShowCodeCopyButtons   = true
+  ShowPostNavLinks      = true
+  ShowBreadCrumbs       = true
+  ShowToc               = true
+  TocOpen               = false
+  ShowRssButtonInSectionTermList = true
+
+  [params.profileMode]
+    enabled     = true
+    title       = "hi, I'm Lucius7 🥺"
+    subtitle    = "OIer / XCPCer / DevOps<Developer />"
+    imageUrl    = "https://avatars.githubusercontent.com/u/59860644?v=4"
+    imageWidth  = "120"
+    imageHeight = "120"
+    imageTitle  = "Lucius7"
+
+
+
+[[params.socialIcons]]
+  name = "codeforces"
+  url  = "https://codeforces.com/profile/Lucius7"
+
+
+[[params.socialIcons]]
+  name = "github"
+  url  = "https://github.com/theLucius7"
+
+[[params.socialIcons]]
+  name = "x"
+  url  = "https://x.com/theLucius7"
+
+[[params.socialIcons]]
+  name = "telegram"
+  url  = "https://t.me/theLucius7"
+
+[[params.socialIcons]]
+  name = "bilibili"
+  url  = "https://space.bilibili.com/1814052279"
+
+
+[[params.socialIcons]]
+  name = "linkedin"
+  url  = "https://linkedin.com/in/cixi-luo-1a56563a2/"
+
+[[params.socialIcons]]
+  name = "zhihu"
+  url  = "https://zhihu.com/people/luocixi"
+
+[[params.socialIcons]]
+  name = "qq"
+  url  = "https://qm.qq.com/q/3012967200"
+
+# ── 联系 / 订阅（固定压轴）────────────────
+[[params.socialIcons]]
+  name = "email"
+  url  = "mailto:Lucius7nya@email.com"
+
+[[params.socialIcons]]
+  name = "rss"
+  url  = "/index.xml"
+
+  [params.label]
+    text = "Lucius7's Blog"
+
+  [params.assets]
+    favicon = "/favicon.ico"
+
+
+[[menu.main]]
+  name   = "文章"
+  url    = "/posts/"
+  weight = 2
+[[menu.main]]
+  name   = "归档"
+  url    = "/archives/"
+  weight = 3
 
 [module]
   [[module.imports]]
