@@ -5,7 +5,11 @@ title = 'My First Post'
 +++
 
 Hi, I'm Lucius7🥺。\
-OIer / XCPCer / DevOps<Developer />
+OIer / XCPCer / DevOps<Developer />  \
+
+Georgette Me, Georgette You.
 
 qwq
+
+
 
