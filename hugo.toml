@@ -78,9 +78,6 @@ title = "hi, I'm Lucius7🥺"
   name = "zhihu"
   url  = "https://zhihu.com/people/luocixi"
 
-[[params.socialIcons]]
-  name = "qq"
-  url  = "https://qm.qq.com/q/3012967200"
 
 # ── 联系 / 订阅（固定压轴）────────────────
 [[params.socialIcons]]
