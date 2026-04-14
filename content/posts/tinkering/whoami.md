@@ -8,7 +8,7 @@ TocOpen: false
 date: 2026-04-14
 ---
 
-## hi, I'm Lucius7 🥺
+## hi, I'm Lucius7🥺
 
 西南石油大学大一在读，曾经的 OIer，现在是 XCPCer。  
 目前主要在准备 ICPC / CCPC 的省赛、邀请赛和区域赛。
