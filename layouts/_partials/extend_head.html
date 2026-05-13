@@ -1,3 +1,18 @@
 {{ if or .Params.math .Site.Params.math }}
   {{ partialCached "math.html" . }}
 {{ end }}
+
+<link rel="stylesheet" href="/fonts/google/site-fonts.css">
+<style>
+  :root {
+    --site-font-sans: "Inter", "Noto Sans SC", sans-serif;
+  }
+
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: var(--site-font-sans);
+  }
+</style>

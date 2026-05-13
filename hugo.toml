@@ -58,12 +58,8 @@ title = "hi, I'm Lucius7🥺"
   url  = "https://github.com/theLucius7"
 
 [[params.socialIcons]]
-  name = "x"
-  url  = "https://x.com/theLucius7"
-
-[[params.socialIcons]]
-  name = "telegram"
-  url  = "https://t.me/theLucius7"
+name = "qq"
+url = "https://wpa.qq.com/msgrd?v=3&uin=3012967200&site=qq&menu=yes"
 
 [[params.socialIcons]]
   name = "bilibili"
@@ -94,13 +90,17 @@ title = "hi, I'm Lucius7🥺"
   [params.assets]
     favicon = "https://avatars.githubusercontent.com/u/59860644?v=4"
 
+  [params.footer]
+    icp = "蜀ICP备2026023763号-1"
+    icpLink = "https://beian.miit.gov.cn/"
+
 
 [[menu.main]]
-  name   = "文章"
+  name   = "Posts"
   url    = "/posts/"
   weight = 2
 [[menu.main]]
-  name   = "归档"
+  name   = "Archives"
   url    = "/archives/"
   weight = 3
 

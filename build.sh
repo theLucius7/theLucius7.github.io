@@ -81,6 +81,10 @@ main() {
     git fetch --unshallow
   fi
 
+  # Sync local Google Fonts subsets before building
+  echo "Syncing local Google Fonts..."
+  node scripts/sync_google_fonts.mjs
+
   # Build the site
   echo "Building the site..."
   hugo build --gc --minify
